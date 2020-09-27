@@ -24,4 +24,5 @@ Things you may want to cover:
 * ...
 
 docker-compose build
+
 docker-compose up
