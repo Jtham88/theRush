@@ -1,0 +1,47 @@
+<%= stylesheet_link_tag params[:controller] %>
+<body>
+  <h1>
+    <div>the Rush - Player statistics page</div>
+  </h1>
+  <div>
+    <h4>Import data</h4>
+    <%= form_tag import_players_path, multipart: true do %>
+      <%= file_field_tag :file %>
+      <%= submit_tag "Import JSON" %>
+    <% end %>
+    <div>Download CSV</div>
+    <div>Sort Players by: OPTIONS</div>
+    <div>Filter Players by: Name</div>
+    <table>
+      <tr>
+        <td>Player Name</td>
+        <td>Team</td>
+        <td>Position</td>
+        <td>Attempts</td>
+        <td>Attempts per game</td>
+        <td>Yards</td>
+        <td>Rushing Average Yards Per Attempt (Avg)</td>
+        <td>Rushing Yards Per Game</td>
+        <td>Touchdowns</td>
+        <td>Longest rush</td>
+        <td>Rushing First Downs</td>
+        <td>Rushing First Down Percentage</td>
+        <td>Rushing 20+ Yards</td>
+        <td>Rushing 40+ Yards</td>
+        <td>Fumbles</td>
+      </tr>
+      <% @players.each do |player| %>
+        <tr>
+          <td>
+            <%= render partial: "player_details", :locals => {:player => player} %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+  <div>
+    <%= link_to "Create a new player", new_player_path %>
+  </div>
+
+  
+</body>
