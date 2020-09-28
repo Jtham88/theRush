@@ -2,11 +2,11 @@ class PlayersController < ActionController::Base
   protect_from_forgery with: :exception
 
   def index
-    if params[:search]
-      @players = Player.by_name(params[:search]).paginate(page: params[:page])
-    else
-      @players = Player.paginate(page: params[:page])
-    end
+    query = Player
+    query = query.order(params[:order]) if params[:order]
+    query = query.by_name(params[:search]) if params[:search]
+    @players = query.paginate(page: params[:page])
+
     render :index
   end
 
@@ -60,7 +60,7 @@ class PlayersController < ActionController::Base
 
   private
   def search_params
-    params.require(:player).permit(:search)
+    params.require(:player).permit(:search, :order_by)
   end
   def player_params
     params.require(:player)
