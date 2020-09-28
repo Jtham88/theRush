@@ -2,7 +2,11 @@ class PlayersController < ActionController::Base
   protect_from_forgery with: :exception
 
   def index
-    @players = Player.all
+    if params[:search]
+      @players = Player.by_name(params[:search]).paginate(page: params[:page])
+    else
+      @players = Player.paginate(page: params[:page])
+    end
     render :index
   end
 
@@ -27,13 +31,7 @@ class PlayersController < ActionController::Base
   end
 
   def import
-    # items = []
-    # CSV.foreach('link/to/file.csv', headers: true) do |row|
-    #   items << row.to_h
-    # end
-    # Item.import(items)
     file = params[:file].read
-    # data = JSON.parse(file)
 
     user_data = JSON.parse(file)
     users = user_data.map do |line|
@@ -61,7 +59,27 @@ class PlayersController < ActionController::Base
   end
 
   private
+  def search_params
+    params.require(:player).permit(:search)
+  end
   def player_params
-    params.require(:player).permit(:name, :set, :description, :amount_cents)
+    params.require(:player)
+      .permit(
+        :player,
+        :team,
+        :position,
+        :attempts,
+        :attempts_per_game,
+        :yds,
+        :avg,
+        :yards_per_game,
+        :touchdowns,
+        :longest_rush,
+        :first_rush_downs,
+        :first_rush_down_percentage,
+        :rushing_20_yards,
+        :rushing_40_yards,
+        :fumbles
+      )
   end
 end

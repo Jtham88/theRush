@@ -11,7 +11,11 @@
     <% end %>
     <div>Download CSV</div>
     <div>Sort Players by: OPTIONS</div>
-    <div>Filter Players by: Name</div>
+    <%= form_tag players_path, :method => 'get' do %>
+      <%= label_tag(:search, "Player search") %>
+      <%= text_field_tag :search, params[:search] %>
+      <%= submit_tag("Search", :name => nil) %>
+    <% end %>
     <table>
       <tr>
         <td>Player Name</td>
@@ -42,6 +46,5 @@
   <div>
     <%= link_to "Create a new player", new_player_path %>
   </div>
-
-  
+  <%= will_paginate @players %>
 </body>
