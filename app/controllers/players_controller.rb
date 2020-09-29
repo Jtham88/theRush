@@ -32,8 +32,10 @@ class PlayersController < ActionController::Base
   end
 
   def import
+    return redirect_to action: "index" if params[:file].blank?
     file = params[:file].read
 
+    players = []
     user_data = JSON.parse(file)
     users = user_data.map do |line|
       player = Player.new
@@ -53,8 +55,9 @@ class PlayersController < ActionController::Base
       player.rushing_40_yards = line['40+']
       player.fumbles = line['FUM']
 
-      player.save
+      players << player
     end
+    Player.import( players, on_duplicate_key_update: Player.column_names - ["id", "player"] )
 
     redirect_to action: "index"
   end
