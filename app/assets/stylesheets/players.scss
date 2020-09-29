@@ -30,19 +30,22 @@ h1.header {
   text-decoration: none;
 }
 
-table {
-  border-collapse: collapse;
-}
-
 .player_table {
-  table, th, td {
-    border: 1px solid black;
+  border: 1px solid black;
+  th {
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+
+  tr {
+    height: 10px;
+  }
+
+  td {
+    text-align: center;
   }
 }
 
-td {
-  text-align: center;
-}
 
 .digg_pagination {
   padding-top: 10px;
