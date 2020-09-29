@@ -10,7 +10,6 @@
       <%= submit_tag "Import JSON" %>
     <% end %>
     <div>Download CSV</div>
-    <div>Sort Players by: OPTIONS</div>
     <%= form_tag players_path, :method => 'get' do %>
       <%= label_tag(:search, "Player search") %>
       <%= text_field_tag :search, params[:search] %>
@@ -23,11 +22,11 @@
         <td>Position</td>
         <td>Attempts</td>
         <td>Attempts per game</td>
-        <td>Yards</td>
+        <th><%= sortable "yds", "Total Rushing Yards", params[:search] %></th>
         <td>Rushing Average Yards Per Attempt (Avg)</td>
         <td>Rushing Yards Per Game</td>
-        <td>Touchdowns</td>
-        <td>Longest rush</td>
+        <th><%= sortable "touchdowns", "Total Rushing Touchdowns", params[:search] %></th>
+        <th><%= sortable "longest_rush", "Longest Rush", params[:search] %></th>
         <td>Rushing First Downs</td>
         <td>Rushing First Down Percentage</td>
         <td>Rushing 20+ Yards</td>

@@ -1,0 +1,18 @@
+<h1><%= @player.player %></h1>
+
+<div>Team: <%= @player.team %></div>
+<div>Position: <%= @player.position %></div>
+<div>Attempts: <%= @player.attempts %></div>
+<div>Attempts per game: <%= @player.attempts_per_game %></div>
+<div>Total Rushing Yards: <%= @player.yds %></div>
+<div>Rushing Average Yards Per Attempt (Avg): <%= @player.avg %></div>
+<div>Rushing Yards Per Game: <%= @player.yards_per_game %></div>
+<div>Total Rushing Touchdowns: <%= @player.touchdowns %></div>
+<div>Longest Rush: <%= @player.longest_rush %></div>
+<div>Rushing First Downs: <%= @player.first_rush_downs %></div>
+<div>Rushing First Down Percentage: <%= @player.first_rush_down_percentage %></div>
+<div>Rushing 20+ Yards: <%= @player.rushing_20_yards %></div>
+<div>Rushing 40+ Yards: <%= @player.rushing_40_yards %></div>
+<div>Fumbles: <%= @player.fumbles %></div>
+
+<div><%= link_to "Go back", players_path %></div>

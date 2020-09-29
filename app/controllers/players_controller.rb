@@ -1,10 +1,11 @@
 class PlayersController < ActionController::Base
   protect_from_forgery with: :exception
+  helper_method :sort_column, :sort_direction
 
   def index
     query = Player
-    query = query.order(params[:order]) if params[:order]
-    query = query.by_name(params[:search]) if params[:search]
+    query = query.order(sort_column + " " + sort_direction) if params[:sort].present? && params[:direction].present?
+    query = query.by_name(params[:search]) if params[:search].present?
     @players = query.paginate(page: params[:page])
 
     render :index
@@ -60,8 +61,9 @@ class PlayersController < ActionController::Base
 
   private
   def search_params
-    params.require(:player).permit(:search, :order_by)
+    params.require(:player).permit(:search, :sort, :direction)
   end
+
   def player_params
     params.require(:player)
       .permit(
@@ -81,5 +83,13 @@ class PlayersController < ActionController::Base
         :rushing_40_yards,
         :fumbles
       )
+  end
+
+  def sort_column
+    Player.column_names.include?(params[:sort]) ? params[:sort] : "player"
+  end
+  
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 end
