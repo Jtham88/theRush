@@ -62,7 +62,21 @@ class PlayersController < ActionController::Base
     redirect_to action: "index"
   end
 
+  def export
+    query = Player.all
+    query = query.order(sort_column + " " + sort_direction) if params[:sort].present? && params[:direction].present?
+    query = query.by_name(params[:search]) if params[:search].present?
+    @players = query
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data @players.to_csv, filename: "players-#{Date.today}.csv" }
+    end
+    # redirect_to action: "index"
+  end
+
   private
+
   def search_params
     params.require(:player).permit(:search, :sort, :direction)
   end
