@@ -11,20 +11,6 @@ class PlayersController < ActionController::Base
     render :index
   end
 
-  def new
-    @player = Player.new
-    render :new
-  end
-
-  def create
-    player = Player.create(player_params)
-    redirect_to player
-  end
-
-  def edit
-    render :edit
-  end
-
   def show
     @params = params
     @player = Player.find(params[:id])
@@ -72,34 +58,12 @@ class PlayersController < ActionController::Base
       format.html
       format.csv { send_data @players.to_csv, filename: "players-#{Date.today}.csv" }
     end
-    # redirect_to action: "index"
   end
 
   private
 
   def search_params
     params.require(:player).permit(:search, :sort, :direction)
-  end
-
-  def player_params
-    params.require(:player)
-      .permit(
-        :player,
-        :team,
-        :position,
-        :attempts,
-        :attempts_per_game,
-        :yds,
-        :avg,
-        :yards_per_game,
-        :touchdowns,
-        :longest_rush,
-        :first_rush_downs,
-        :first_rush_down_percentage,
-        :rushing_20_yards,
-        :rushing_40_yards,
-        :fumbles
-      )
   end
 
   def sort_column
