@@ -11,3 +11,4 @@ RUN gem update --system
 RUN gem install bundler -v 2.1.4
 RUN bundle install
 ADD . /app
+RUN bundle exec rake assets:precompile RAILS_ENV=production

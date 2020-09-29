@@ -1,17 +1,22 @@
 <%= stylesheet_link_tag params[:controller] %>
 <body>
-  <h1>
+  <h1 class="header">
     <div>the Rush - Player statistics page</div>
   </h1>
   <div>
-    <h4>Import data</h4>
-    <%= form_tag import_players_path, multipart: true do %>
-      <%= file_field_tag :file %>
-      <%= submit_tag "Import JSON" %>
-    <% end %>
-
-    <h4>Export data</h4>
-    <div><%= link_to( 'Export CSV', export_players_path(format: "csv", params: params.permit(:search, :sort, :direction)), :class => "btn-export") %></div>
+    <div class="flex flex-end">
+      <div class="import_data">
+        <h4>Import data</h4>
+        <%= form_tag import_players_path, multipart: true do %>
+          <%= file_field_tag :file %>
+          <%= submit_tag "Import JSON" %>
+        <% end %>
+      </div>
+      <div class="export_data">
+        <h4>Export data</h4>
+        <div><button type="button"><%= link_to( 'Export CSV', export_players_path(format: "csv", params: params.permit(:search, :sort, :direction)), :class => "export_link") %></button></div>
+      </div>
+    </div>
 
     <%= form_tag players_path, :method => 'get' do %>
       <%= label_tag(:search, "Player search") %>
@@ -19,23 +24,23 @@
       <%= submit_tag("Search", :name => nil) %>
     <% end %>
 
-    <table>
+    <table class="player_table">
       <tr>
-        <td>Player Name</td>
-        <td>Team</td>
-        <td>Position</td>
-        <td>Attempts</td>
-        <td>Attempts per game</td>
+        <th>Player Name</th>
+        <th>Team</th>
+        <th>Position</th>
+        <th>Attempts</th>
+        <th>Attempts per game</th>
         <th><%= sortable "yds", "Total Rushing Yards", params[:search] %></th>
-        <td>Rushing Average Yards Per Attempt (Avg)</td>
-        <td>Rushing Yards Per Game</td>
+        <th>Rushing Average Yards Per Attempt (Avg)</th>
+        <th>Rushing Yards Per Game</th>
         <th><%= sortable "touchdowns", "Total Rushing Touchdowns", params[:search] %></th>
         <th><%= sortable "longest_rush", "Longest Rush", params[:search] %></th>
-        <td>Rushing First Downs</td>
-        <td>Rushing First Down Percentage</td>
-        <td>Rushing 20+ Yards</td>
-        <td>Rushing 40+ Yards</td>
-        <td>Fumbles</td>
+        <th>Rushing First Downs</th>
+        <th>Rushing First Down Percentage</th>
+        <th>Rushing 20+ Yards</th>
+        <th>Rushing 40+ Yards</th>
+        <th>Fumbles</th>
       </tr>
       <% @players.each do |player| %>
         <tr>
@@ -46,5 +51,7 @@
       <% end %>
     </table>
   </div>
-  <%= will_paginate @players %>
+  <div class="digg_pagination flex justify-center">
+    <%= will_paginate @players %>
+  </div>
 </body>
